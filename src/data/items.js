@@ -6,7 +6,7 @@ export const items = [
       content: (
         <div className="text-file">
           <h2>About Me</h2>
-          <p>Hi! I'm a CS student passionate about web development...</p>
+          <p>Hi! I'm a CS student</p>
         </div>
       )
     },
@@ -31,7 +31,7 @@ export const items = [
       content: (
         <div className="contact">
           <h2>Contact Me</h2>
-          <p>Email: student@example.com</p>
+          <p>Email: gunerk@uwindsor.ca</p>
         </div>
       )
     }
