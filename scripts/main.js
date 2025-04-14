@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (type === 'blogs') openBlogs(wm);
         });
     });
-
     // Update clock
     setInterval(() => {
         const now = new Date();
