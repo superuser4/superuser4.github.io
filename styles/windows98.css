@@ -1,0 +1,57 @@
+/* Windows 98 Classic Theme */
+body {
+    background: #008080 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIklEQVQIW2NkQAKrVq36zwjjgzhhYWGMYAEYB8RmROaABADeOQ8CXl/xfgAAAABJRU5ErkJggg==');
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'MS Sans Serif', sans-serif;
+    font-size: 13px;
+}
+
+/* 3D Border Effects */
+.window {
+    border: 3px solid;
+    border-color: #dfdfdf #404040 #404040 #dfdfdf;
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+    background: #c0c0c0;
+}
+
+.title-bar {
+    background: #000080;
+    color: white;
+    padding: 3px 2px 3px 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+}
+
+.button {
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    background: #c0c0c0;
+    min-width: 75px;
+    padding: 2px 10px;
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+.taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #c0c0c0;
+    border-top: 2px solid #dfdfdf;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    gap: 4px;
+}
+
+.start-button {
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    padding: 2px 6px;
+    cursor: pointer;
+}
