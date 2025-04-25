@@ -27,9 +27,7 @@ function openProjects(wm) {
             <div class="content">
                 <h2>📂 My Projects</h2>
                 <ul>
-                    <li>Project 1</li>
-                    <li>Project 2</li>
-                    <li>Project 3</li>
+                    <li>G</li>
                 </ul>
             </div>
         `
@@ -71,20 +69,20 @@ function openBlogs(wm) {
 
 async function fetchBlogs() {
     // In real implementation, fetch from Markdown files
-    return {
-        'CTF': [
-            {
-                title: "HackTheBox Walkthrough",
-                date: "2024-03-15",
-                content: "Detailed solution for the XYZ machine..."
-            }
-        ],
-        'Tech Talks': [
-            {
-                title: "WebAssembly Deep Dive",
-                date: "2024-03-20",
-                content: "Exploring WASM internals..."
-            }
-        ]
-    };
+    //return {
+    //    'CTF': [
+    //        {
+    //            title: "HackTheBox Walkthrough",
+    //            date: "2024-03-15",
+    //            content: "Detailed solution for the XYZ machine..."
+    //        }
+    //    ],
+    //    'Tech Talks': [
+    //       {
+    //            title: "WebAssembly Deep Dive",
+    //            date: "2024-03-20",
+    //            content: "Exploring WASM internals..."
+    //        }
+    //    ]
+   // };
 }
