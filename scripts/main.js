@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const type = icon.dataset.window;
             if (type === 'projects') openProjects(wm);
             if (type === 'blogs') openBlogs(wm);
+            if (type === 'about') openAbout(wm);
         });
     });
     // Update clock
@@ -17,17 +18,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
 });
 
+function openAbout(wm) {
+    wm.createWindow({
+        id: 'about_me',
+        title: 'About me',
+        x: 550,
+        y: 150,
+        width: 600,
+        height: 400,
+        content: `
+            <div class="content">
+                <h2> ✉️ About Me </h2>
+                <ul>
+                    <li> My name is Kayra Guner </li>
+                    <li> I'm a Computer Science student at the University of Windsor </li>
+                    <li>Contact:
+                        <ul>
+                            <li><a href="https://www.linkedin.com/in/kayra-guner-a44b71343">Linkedin</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        `
+    });
+}
+
 function openProjects(wm) {
     wm.createWindow({
         id: 'projects',
         title: 'Projects',
-        x: 100,
-        y: 100,
+        x: 550,
+        y: 150,
+        width: 650,
+        height: 400,
         content: `
             <div class="content">
                 <h2>📂 My Projects</h2>
                 <ul>
-                    <li>G</li>
+                    <li>gobricked is a C2 server written in Go that uses HTTPS for communication with beacon</li>
                 </ul>
             </div>
         `
@@ -35,54 +63,60 @@ function openProjects(wm) {
 }
 
 function openBlogs(wm) {
-    fetchBlogs().then(blogs => {
+    fetchBlogs().then(async blogs => {
+        const content = document.createElement('div');
+        content.className = 'content';
+        content.innerHTML = `<h2>📝 Blog Posts</h2>`;
+
+        for (const category in blogs) {
+            const section = document.createElement('div');
+            section.innerHTML = `<h3>${category}</h3><ul></ul>`;
+            const ul = section.querySelector('ul');
+
+            for (const url of blogs[category]) {
+                const li = document.createElement('li');
+                const filename = url.split('/').pop().replace('.md', '');
+                li.innerHTML = `<a href="#" data-url="${url}">${filename}</a>`;
+                
+                li.querySelector('a').addEventListener('click', async e => {
+                    e.preventDefault();
+                    const md = await fetch(url).then(res => res.text());
+                    const html = marked.parse(md);
+
+                    wm.createWindow({
+                        id: `blog_${filename}`,
+                        title: filename,
+                        x: 600,
+                        y: 200,
+                        width: 650,
+                        height: 500,
+                        content: `<div class="content">${html}</div>`
+                    });
+                });
+
+                ul.appendChild(li);
+            }
+
+            content.appendChild(section);
+        }
+
         wm.createWindow({
             id: 'blogs',
             title: 'Blog Posts',
-            x: 200,
-            y: 200,
-            content: `
-                <div class="blog-categories">
-                    <button class="category active" data-category="all">All</button>
-                    ${Object.keys(blogs).map(cat => `
-                        <button class="category" data-category="${cat}">${cat}</button>
-                    `).join('')}
-                </div>
-                <div class="blog-list">
-                    ${Object.entries(blogs).map(([category, posts]) => `
-                        <div class="blog-category" data-category="${category}">
-                            <h3>${category}</h3>
-                            ${posts.map(post => `
-                                <div class="blog-post">
-                                    <h4>${post.title}</h4>
-                                    <div class="date">📅 ${post.date}</div>
-                                    <p>${post.content}</p>
-                                </div>
-                            `).join('')}
-                        </div>
-                    `).join('')}
-                </div>
-            `
+            x: 550,
+            y: 150,
+            width: 600,
+            height: 400,
+            content: content.outerHTML
         });
     });
 }
 
 async function fetchBlogs() {
-    // In real implementation, fetch from Markdown files
-    //return {
-    //    'CTF': [
-    //        {
-    //            title: "HackTheBox Walkthrough",
-    //            date: "2024-03-15",
-    //            content: "Detailed solution for the XYZ machine..."
-    //        }
-    //    ],
-    //    'Tech Talks': [
-    //       {
-    //            title: "WebAssembly Deep Dive",
-    //            date: "2024-03-20",
-    //            content: "Exploring WASM internals..."
-    //        }
-    //    ]
-   // };
+    const response = await fetch('blogIndex.json');
+    if (!response.ok) {
+        throw new Error('Failed to load blogIndex.json');
+    }
+    return await response.json();
 }
+

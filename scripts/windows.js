@@ -15,6 +15,14 @@ class WindowManager {
         windowEl.id = `window-${config.id}`;
         windowEl.style.left = `${config.x}px`;
         windowEl.style.top = `${config.y}px`;
+        
+        if (config.width) {
+            windowEl.style.width = `${config.width}px`;
+        }
+        if (config.height) {
+            windowEl.style.height = `${config.height}px`;
+        }
+        
         windowEl.querySelector('.title').textContent = config.title;
         windowEl.querySelector('.content').innerHTML = config.content;
 
