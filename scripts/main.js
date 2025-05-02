@@ -22,10 +22,10 @@ function openAbout(wm) {
     wm.createWindow({
         id: 'about_me',
         title: 'About me',
-        x: 550,
-        y: 150,
-        width: 600,
-        height: 400,
+        x: 350,
+        y: 100,
+        width: 1150,
+        height: 750,
         content: `
             <div class="content">
                 <h2> ✉️ About Me </h2>
@@ -35,6 +35,21 @@ function openAbout(wm) {
                     <li>Contact:
                         <ul>
                             <li><a href="https://www.linkedin.com/in/kayra-guner-a44b71343">Linkedin</a></li>
+                            <li><a href="https://github.com/superuser4">Github</a></li>
+                            <li><a href="">Resume</a></li>
+                            <li><a href="">Email</a></li>
+                        </ul>
+                    </li>
+                    <li>Some cool things I've done:
+                        <ul>
+                            <li> I've attended CS Games 2025 hosted in Quebec City, University of L'aval with a team of 20 </li>
+                            <li> Multiple Hackathons </li>
+                            <li> Winner of multiple CTF competitions in cybersecurity workshops offered by the University of Windsor in collaboration with Sterling Information Technologies </li>
+                        </ul>
+                    </li>
+                    <li>Education:
+                        <ul>
+                            <li> Computer Science Honours, University of Windsor </li>
                         </ul>
                     </li>
                 </ul>
@@ -47,8 +62,8 @@ function openProjects(wm) {
     wm.createWindow({
         id: 'projects',
         title: 'Projects',
-        x: 550,
-        y: 150,
+        x: 350,
+        y: 100,
         width: 650,
         height: 400,
         content: `
@@ -63,60 +78,96 @@ function openProjects(wm) {
 }
 
 function openBlogs(wm) {
-    fetchBlogs().then(async blogs => {
-        const content = document.createElement('div');
-        content.className = 'content';
-        content.innerHTML = `<h2>📝 Blog Posts</h2>`;
+    const blogWindow = wm.createWindow({
+        id: 'blogs',
+        title: 'Blog Categories',
+        x: 350,
+        y: 100,
+        width: 800,
+        height: 600,
+        content: `
+            <div class="content">
+                <h2>📝 Blog Categories</h2>
+                <div id="blog-categories">Loading categories...</div>
+            </div>
+        `
+    });
 
-        for (const category in blogs) {
-            const section = document.createElement('div');
-            section.innerHTML = `<h3>${category}</h3><ul></ul>`;
-            const ul = section.querySelector('ul');
+    fetch('/blogs.json')
+        .then(response => response.json())
+        .then(data => {
+            const categories = {};
+            data.posts.forEach(post => {
+                if (!categories[post.category]) {
+                    categories[post.category] = [];
+                }
+                categories[post.category].push(post);
+            });
 
-            for (const url of blogs[category]) {
-                const li = document.createElement('li');
-                const filename = url.split('/').pop().replace('.md', '');
-                li.innerHTML = `<a href="#" data-url="${url}">${filename}</a>`;
-                
-                li.querySelector('a').addEventListener('click', async e => {
-                    e.preventDefault();
-                    const md = await fetch(url).then(res => res.text());
-                    const html = marked.parse(md);
+            const categoryContainer = blogWindow.el.querySelector('#blog-categories');
+            categoryContainer.innerHTML = '';
 
-                    wm.createWindow({
-                        id: `blog_${filename}`,
-                        title: filename,
-                        x: 600,
-                        y: 200,
-                        width: 650,
-                        height: 500,
-                        content: `<div class="content">${html}</div>`
+            Object.keys(categories).forEach(category => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.innerHTML = `<h3>${category}</h3>`;
+                const ul = document.createElement('ul');
+
+                categories[category].forEach(post => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<a href="#" data-path="${post.path}" data-title="${post.title}">${post.title}</a>`;
+                    ul.appendChild(li);
+
+                    li.querySelector('a').addEventListener('click', (e) => {
+                        e.preventDefault();
+                        openBlogPost(post.path, wm);
                     });
                 });
 
-                ul.appendChild(li);
-            }
-
-            content.appendChild(section);
-        }
-
-        wm.createWindow({
-            id: 'blogs',
-            title: 'Blog Posts',
-            x: 550,
-            y: 150,
-            width: 600,
-            height: 400,
-            content: content.outerHTML
+                categoryDiv.appendChild(ul);
+                categoryContainer.appendChild(categoryDiv);
+            });
+        })
+        .catch(err => {
+            const categoryContainer = blogWindow.el.querySelector('#blog-categories');
+            categoryContainer.innerHTML = '<p style="color:red;">Failed to load blog categories.</p>';
+            console.error('Error loading blogs.json:', err);
         });
-    });
 }
 
-async function fetchBlogs() {
-    const response = await fetch('blogIndex.json');
-    if (!response.ok) {
-        throw new Error('Failed to load blogIndex.json');
-    }
-    return await response.json();
+function openBlogPost(path, wm) {
+    fetch(path)
+        .then(response => response.text())
+        .then(markdown => {
+            const blogPostWindow = wm.createWindow({
+                id: 'blog-post',
+                title: 'Blog Post',
+                x: 400,
+                y: 150,
+                width: 800,
+                height: 600,
+                content: `
+                    <div class="content">
+                        <h2>${path}</h2>
+                        <div class="markdown-content">${markdownToHTML(markdown)}</div>
+                    </div>
+                `
+            });
+        })
+        .catch(err => {
+            console.error('Error loading blog post:', err);
+        });
+}
+
+
+
+// Simple markdown-to-HTML conversion (you can improve it or use a library like marked.js)
+function markdownToHTML(markdown) {
+    return markdown
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>') // H3 Headers
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')  // H2 Headers
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')   // H1 Headers
+        .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>') // Bold text
+        .replace(/\*(.*)\*/gim, '<em>$1</em>')    // Italics text
+        .replace(/\n$/gim, '<br>');                // Newlines
 }
 

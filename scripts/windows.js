@@ -25,22 +25,25 @@ class WindowManager {
         
         windowEl.querySelector('.title').textContent = config.title;
         windowEl.querySelector('.content').innerHTML = config.content;
-
+    
         // Add to taskbar
         const taskbarItem = this.createTaskbarItem(config.title, windowEl.id);
         this.taskbar.appendChild(taskbarItem);
-
+    
         // Window controls
         clone.querySelector('.close').addEventListener('click', () => this.closeWindow(windowEl.id));
         clone.querySelector('.minimize').addEventListener('click', () => this.minimizeWindow(windowEl.id));
-
+    
         // Make draggable
         this.makeDraggable(windowEl);
-
+    
         document.getElementById('windows-container').appendChild(clone);
         this.windows.push(windowEl);
         this.bringToFront({target: windowEl});
+        
+        return {el: windowEl};
     }
+    
 
     createTaskbarItem(title, windowId) {
         const item = document.createElement('div');

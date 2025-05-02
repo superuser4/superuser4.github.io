@@ -1,0 +1,14 @@
+{
+    "posts": [
+      {
+        "category": "CTF Writeups",
+        "path": "/blogs/ctf/sample-writeup.md",
+        "title": "Sample CTF Challenge Walkthrough"
+      },
+      {
+        "category": "Tech Talks",
+        "path": "/blogs/tech-talks/C-Programming.md",
+        "title": "A Talk about the C programming language"
+      }
+    ]
+  }
