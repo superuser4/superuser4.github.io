@@ -1,3 +1,2 @@
-# The C programming language
-## Some things i like
-- C programming language is awesome
+## The C programming language
+- The C programming language is awesome
