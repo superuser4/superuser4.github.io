@@ -50,9 +50,16 @@ class WindowManager {
         item.className = 'taskbar-item';
         item.innerHTML = `📄 ${title}`;
         item.dataset.windowId = windowId;
-        item.addEventListener('click', () => this.bringToFront({target: document.getElementById(windowId)}));
+        item.addEventListener('click', () => {
+            const win = document.getElementById(windowId);
+            if (win.style.display === 'none') {
+                win.style.display = 'block'; // Show window again if it was minimized
+            }
+            this.bringToFront({target: win});
+        });
         return item;
     }
+    
 
     makeDraggable(windowEl) {
         const titleBar = windowEl.querySelector('.title-bar');
