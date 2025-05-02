@@ -32,6 +32,7 @@ class WindowManager {
     
         // Window controls
         clone.querySelector('.close').addEventListener('click', () => this.closeWindow(windowEl.id));
+        clone.querySelector('.maximize').addEventListener('click', () => this.maximizeWindow(windowEl.id));
         clone.querySelector('.minimize').addEventListener('click', () => this.minimizeWindow(windowEl.id));
     
         // Make draggable
@@ -43,7 +44,6 @@ class WindowManager {
         
         return {el: windowEl};
     }
-    
 
     createTaskbarItem(title, windowId) {
         const item = document.createElement('div');
@@ -60,6 +60,7 @@ class WindowManager {
         let offset = [0, 0];
 
         titleBar.addEventListener('mousedown', e => {
+            if (windowEl.dataset.maximized === 'true') return; // Prevent dragging when maximized
             isDragging = true;
             offset = [
                 windowEl.offsetLeft - e.clientX,
@@ -94,4 +95,30 @@ class WindowManager {
         const windowEl = document.getElementById(windowId);
         windowEl.style.display = 'none';
     }
+
+    maximizeWindow(windowId) {
+        const windowEl = document.getElementById(windowId);
+    
+        // Toggle maximize
+        if (windowEl.classList.contains('maximized')) {
+            // Restore previous size/position
+            const { left, top, width, height } = windowEl.dataset;
+            windowEl.style.left = left;
+            windowEl.style.top = top;
+            windowEl.style.width = width;
+            windowEl.style.height = height;
+            windowEl.classList.remove('maximized');
+        } else {
+            // Store current size/position
+            windowEl.dataset.left = windowEl.style.left;
+            windowEl.dataset.top = windowEl.style.top;
+            windowEl.dataset.width = windowEl.style.width;
+            windowEl.dataset.height = windowEl.style.height;
+    
+            // Maximize
+            windowEl.style.left = '0px';
+            windowEl.style.top = '0px';
+            windowEl.classList.add('maximized');
+        }
+    }    
 }

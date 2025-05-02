@@ -135,7 +135,7 @@ function openBlogs(wm) {
 }
 
 function openBlogPost(path, wm) {
-    fetch(path)
+    fetch(`${path}?ts=${Date.now()}`)
         .then(response => response.text())
         .then(markdown => {
             const blogPostWindow = wm.createWindow({
@@ -158,9 +158,6 @@ function openBlogPost(path, wm) {
         });
 }
 
-
-
-// Simple markdown-to-HTML conversion (you can improve it or use a library like marked.js)
 function markdownToHTML(markdown) {
     return markdown
         .replace(/^### (.*$)/gim, '<h3>$1</h3>') // H3 Headers

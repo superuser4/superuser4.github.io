@@ -43,19 +43,20 @@
         <div class="clock">12:00 PM</div>
     </div>
 
-    <!-- Templates -->
     <template id="window-template">
         <div class="window">
-            <div class="title-bar">
-                <span class="title"></span>
-                <div class="window-controls">
-                    <button class="minimize">−</button>
-                    <button class="close">×</button>
-                </div>
+          <div class="title-bar">
+            <span class="title">Window Title</span>
+            <div class="window-controls">
+              <button class="minimize" title="Minimize">_</button>
+              <button class="maximize" title="Maximize">🗖</button>
+              <button class="close" title="Close">×</button>
             </div>
-            <div class="content"></div>
+          </div>
+          <div class="content"></div>
         </div>
-    </template>
+      </template>
+      
     <script src="scripts/windows.js"></script>
     <script src="scripts/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
