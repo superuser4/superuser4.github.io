@@ -24,8 +24,8 @@ function openAbout(wm) {
         title: 'About me',
         x: 350,
         y: 100,
-        width: 1150,
-        height: 750,
+        width: 750,
+        height: 550,
         content: `
             <div class="content">
                 <h2> ✉️ About Me </h2>
