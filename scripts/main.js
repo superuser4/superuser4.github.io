@@ -52,6 +52,10 @@ function openAbout(wm) {
                             <li> Computer Science Honours, University of Windsor </li>
                         </ul>
                     </li>
+                    <li>Extra:
+                        <ul>
+                            <li><a href="https://attack.mitre.org/">MITRE ATT&CK</a></li>
+                        </ul>
                 </ul>
             </div>
         `
