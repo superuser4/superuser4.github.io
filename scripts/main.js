@@ -70,7 +70,6 @@ function openProjects(wm) {
             <div class="content">
                 <h2>📂 My Projects</h2>
                 <ul>
-                    <li><a href="https://github.com/superuser4">Github</a></li>
                     <li><a href="https://github.com/superuser4/gstrike">Gstrike</a> is a C2 server written in Go that uses HTTPS for communication with beacon</li>
                 </ul>
             </div>
