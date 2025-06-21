@@ -43,8 +43,8 @@ function openAbout(wm) {
                     <li>Some cool things I've done:
                         <ul>
                             <li> I've attended CS Games 2025 hosted in Quebec City, University of L'aval with a team of 20 </li>
-                            <li> Multiple Hackathons </li>
-                            <li> Winner of multiple CTF competitions in cybersecurity workshops offered by the University of Windsor in collaboration with Sterling Information Technologies </li>
+                            <li> UWindsor Winhacks participant </li>
+                            <li> Winner of CTF competitions in cybersecurity workshops offered by the University of Windsor </li>
                         </ul>
                     </li>
                     <li>Education:
@@ -74,7 +74,7 @@ function openProjects(wm) {
             <div class="content">
                 <h2>📂 My Projects</h2>
                 <ul>
-                    <li><a href="https://github.com/superuser4/gstrike">Gstrike</a> is a C2 server written in Go that uses HTTPS for communication with beacon</li>
+                    <li><a href="https://github.com/superuser4/gstrike">Gstrike</a> is custom C2 server written in Rust that uses HTTPS for communication with beacon</li>
                 </ul>
             </div>
         `
