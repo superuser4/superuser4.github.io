@@ -74,7 +74,6 @@ function openProjects(wm) {
             <div class="content">
                 <h2>📂 My Projects</h2>
                 <ul>
-                    <li><a href="https://github.com/superuser4/gstrike">Gstrike</a> is custom C2 server written in Rust that uses HTTPS for communication with beacon</li>
                 </ul>
             </div>
         `
