@@ -85,9 +85,9 @@ function openBlogs(wm) {
         height: 600,
         content: `
             <div class="content">
-                <h2>📝 Blog Categories</h2>
+                <h2>📝 Blog Page Link</h2>
 		<ul>
-			<li><a href="https://superuser4.github.io/blogs/index.html"></a></li>
+			<li><a href="https://superuser4.github.io/blogs/index.html">Blogs</a></li>
 		</ul>
             </div>
         `
