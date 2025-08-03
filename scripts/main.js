@@ -78,7 +78,7 @@ function openProjects(wm) {
 function openBlogs(wm) {
     const blogWindow = wm.createWindow({
         id: 'blogs',
-        title: 'Blog Categories',
+        title: 'Blogs',
         x: 350,
         y: 100,
         width: 800,
