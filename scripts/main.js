@@ -36,8 +36,6 @@ function openAbout(wm) {
                         <ul>
                             <li><a href="https://www.linkedin.com/in/kayra-guner-a44b71343">Linkedin</a></li>
                             <li><a href="https://github.com/superuser4">Github</a></li>
-                            <li><a href="">Resume</a></li>
-                            <li><a href="">Email</a></li>
                         </ul>
                     </li>
                     <li>Some cool things I've done:
@@ -52,10 +50,6 @@ function openAbout(wm) {
                             <li> Computer Science Honours, University of Windsor </li>
                         </ul>
                     </li>
-                    <li>Extra:
-                        <ul>
-                            <li><a href="https://attack.mitre.org/">MITRE ATT&CK</a></li>
-                        </ul>
                 </ul>
             </div>
         `
@@ -92,84 +86,10 @@ function openBlogs(wm) {
         content: `
             <div class="content">
                 <h2>📝 Blog Categories</h2>
-                <div id="blog-categories">Loading categories...</div>
+		<ul>
+			<li><a href="https://superuser4.github.io/blogs.html"></a></li>
+		</ul>
             </div>
         `
     });
-
-    fetch('/blogs.json')
-        .then(response => response.json())
-        .then(data => {
-            const categories = {};
-            data.posts.forEach(post => {
-                if (!categories[post.category]) {
-                    categories[post.category] = [];
-                }
-                categories[post.category].push(post);
-            });
-
-            const categoryContainer = blogWindow.el.querySelector('#blog-categories');
-            categoryContainer.innerHTML = '';
-
-            Object.keys(categories).forEach(category => {
-                const categoryDiv = document.createElement('div');
-                categoryDiv.innerHTML = `<h3>${category}</h3>`;
-                const ul = document.createElement('ul');
-
-                categories[category].forEach(post => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `<a href="#" data-path="${post.path}" data-title="${post.title}">${post.title}</a>`;
-                    ul.appendChild(li);
-
-                    li.querySelector('a').addEventListener('click', (e) => {
-                        e.preventDefault();
-                        openBlogPost(post.path, wm);
-                    });
-                });
-
-                categoryDiv.appendChild(ul);
-                categoryContainer.appendChild(categoryDiv);
-            });
-        })
-        .catch(err => {
-            const categoryContainer = blogWindow.el.querySelector('#blog-categories');
-            categoryContainer.innerHTML = '<p style="color:red;">Failed to load blog categories.</p>';
-            console.error('Error loading blogs.json:', err);
-        });
 }
-
-function openBlogPost(path, wm) {
-    fetch(`${path}?ts=${Date.now()}`)
-        .then(response => response.text())
-        .then(markdown => {
-            const blogPostWindow = wm.createWindow({
-                id: 'blog-post',
-                title: 'Blog Post',
-                x: 400,
-                y: 150,
-                width: 800,
-                height: 600,
-                content: `
-                    <div class="content">
-		    	<ul>
-				<li><a href="https://superuser4.github.io/blogs.html"></a></li>
-			</ul>
-                    </div>
-                `
-            });
-        })
-        .catch(err => {
-            console.error('Error loading blog post:', err);
-        });
-}
-
-function markdownToHTML(markdown) {
-    return markdown
-        .replace(/^### (.*$)/gim, '<h3>$1</h3>') // H3 Headers
-        .replace(/^## (.*$)/gim, '<h2>$1</h2>')  // H2 Headers
-        .replace(/^# (.*$)/gim, '<h1>$1</h1>')   // H1 Headers
-        .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>') // Bold text
-        .replace(/\*(.*)\*/gim, '<em>$1</em>')    // Italics text
-        .replace(/\n$/gim, '<br>');                // Newlines
-}
-
