@@ -74,6 +74,7 @@ function openProjects(wm) {
             <div class="content">
                 <h2>📂 My Projects</h2>
                 <ul>
+			<li><a href="https://github.com/superuser4">My Github</a></li>
                 </ul>
             </div>
         `
@@ -150,8 +151,9 @@ function openBlogPost(path, wm) {
                 height: 600,
                 content: `
                     <div class="content">
-                        <h2>${path}</h2>
-                        <div class="markdown-content">${markdownToHTML(markdown)}</div>
+		    	<ul>
+				<li><a href="https://superuser4.github.io/blogs.html"></a></li>
+			</ul>
                     </div>
                 `
             });
